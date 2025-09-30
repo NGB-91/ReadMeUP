@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-container">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReadMeUp Logo" class="main-logo">
+
+  <p class="tagline">May you find your next favourite story</p>
+
+  <div class="instructions">
+    <h2>How does it work:</h2>
+    <ul>
+      <li>Tap the menu on the right corner</li>
+      <li>Choose how you would like to search for your next book</li>
+      <li>Click the search button and you are all set</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

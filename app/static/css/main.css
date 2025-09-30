@@ -1,0 +1,964 @@
+/* static/css/main.css - Enhanced Book Recommendation System */
+
+/* ===== CSS Variables for Consistent Theming ===== */
+:root {
+  --primary-color: #0a7333;
+  --primary-dark: #085a28;
+  --primary-light: #0d8c42;
+  --accent-color: #FFD700;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+  --bg-light: #ffffff;
+  --bg-dark: #000000;
+  --card-bg-light: #f8f9fa;
+  --card-bg-dark: #111111;
+  --border-light: #e0e0e0;
+  --border-dark: #333333;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(255, 255, 255, 0.1);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+/* ===== Global Reset and Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 18px;
+  font-family: 'Handlee', cursive;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  line-height: 1.6;
+  transition: var(--transition);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* ===== Topbar Styles ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px var(--shadow-light);
+  height: 60px;
+}
+
+body.dark-mode .topbar {
+  background-color: var(--bg-dark);
+  box-shadow: 0 2px 10px var(--shadow-dark);
+}
+
+/* ===== Button Styles ===== */
+.menu-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.theme-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+  transition: var(--transition);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-button:hover {
+  transform: scale(1.1);
+}
+
+/* ===== Sidebar Menu Panel ===== */
+.menu-panel {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: calc(100vh - 60px);
+  width: 300px;
+  background-color: var(--primary-color);
+  color: white;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  z-index: 999;
+  overflow-y: auto;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.menu-panel.open {
+  display: flex;
+}
+
+/* Ensure menu stays open on model pages */
+body.menu-open .menu-panel {
+  display: flex !important;
+}
+
+/* Menu header */
+.menu-header {
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.home-link {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  transition: var(--transition);
+  font-family: 'Rancho', cursive;
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  display: block;
+  width: 100%;
+}
+
+.home-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+/* ===== Menu Links ===== */
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.menu-links a {
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+  font-family: 'Rancho', cursive;
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.menu-links a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Creators Block ===== */
+.creators-block {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.created-by {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+.creators {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.creator {
+  position: relative;
+  transition: var(--transition);
+}
+
+.creator:hover {
+  transform: scale(1.1);
+}
+
+.creator img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.creator:hover img {
+  border-color: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 1001;
+}
+
+.creator:hover .tooltip {
+  visibility: visible;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  padding: 0px 40px 20px 40px; /* FIXED: Reduced top padding to bring logo closer to topbar */
+  margin-top: 60px;
+  margin-left: 0;
+  width: 100%;
+  transition: var(--transition);
+  min-height: calc(100vh - 60px);
+}
+
+body.menu-open .main-content {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+  padding-left: 80px;
+  padding-right: 60px;
+}
+
+/* ===== Home Container - FIXED: Logo much larger and closer to top ===== */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* FIXED: Start from top */
+  padding: 10px 20px 20px 20px; /* FIXED: Reduced top padding */
+  max-width: 1200px;
+  margin: 0 auto;
+  height: calc(100vh - 80px);
+  gap: 15px;
+}
+
+.home-center-content {
+  flex: 1;
+  max-width: 600px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* FIXED: Start from top */
+  margin: 0 auto;
+}
+
+.home-stats-section {
+  width: 100%;
+  max-width: 300px; /* FIXED: Much narrower */
+  margin: 0 auto;
+}
+
+/* FIXED: Much larger logo that stands out */
+.main-logo {
+  max-width: 500px; /* FIXED: Significantly larger */
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px; /* FIXED: Reduced space below logo */
+  margin-top: -10px; /* FIXED: Pull logo closer to topbar */
+}
+
+.tagline {
+  font-size: 24px; /* FIXED: Kept reasonable size */
+  font-family: 'Rancho', cursive;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+body.dark-mode .tagline {
+  color: var(--primary-light);
+}
+
+/* ===== Instructions Section - FIXED: Kept current good size ===== */
+.instructions {
+  margin: 10px auto;
+  max-width: 450px;
+  text-align: center;
+  width: 100%;
+}
+
+.instructions h2 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-family: 'Rancho', cursive;
+  font-size: 22px;
+  text-align: center;
+}
+
+.instructions ol {
+  padding-left: 0;
+  list-style: none;
+  counter-reset: instruction-counter;
+  display: inline-block;
+  text-align: left;
+}
+
+.instructions li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 8px 0 8px 40px;
+  position: relative;
+  counter-increment: instruction-counter;
+}
+
+.instructions li::before {
+  content: counter(instruction-counter);
+  background-color: var(--primary-color);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ===== Stats Section - FIXED: Much smaller, narrower and longer ===== */
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 10px; /* FIXED: Much smaller padding */
+  background: rgba(10, 115, 51, 0.08); /* FIXED: More transparent */
+  border-radius: 6px;
+  color: var(--primary-color);
+  text-align: center;
+  width: 100%;
+  border: 1px solid rgba(10, 115, 51, 0.15); /* FIXED: More subtle border */
+  backdrop-filter: blur(3px);
+  height: 60px; /* FIXED: Fixed height for consistency */
+}
+
+body.dark-mode .stats-section {
+  background: rgba(10, 115, 51, 0.05);
+  color: var(--primary-light);
+  border-color: rgba(10, 115, 51, 0.2);
+}
+
+.stat {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 14px; /* FIXED: Smaller numbers */
+  font-weight: bold;
+  font-family: 'Rancho', cursive;
+  margin-bottom: 2px;
+}
+
+.stat-label {
+  font-size: 9px; /* FIXED: Much smaller labels */
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Model Containers ===== */
+.quick-pick-container,
+.smart-match-container,
+.deep-dive-container {
+  max-width: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+/* Center content but allow full width usage */
+.model-form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== Form Elements ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea {
+  font-size: 18px;
+  padding: 14px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: var(--transition);
+  font-family: 'Handlee', cursive;
+}
+
+body.dark-mode form input[type="text"],
+body.dark-mode form input[type="number"],
+body.dark-mode form select,
+body.dark-mode form textarea {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+  border-color: var(--primary-light);
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+form textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+form button {
+  font-size: 20px;
+  padding: 16px 32px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Handlee', cursive;
+  font-weight: bold;
+}
+
+form button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* ===== Solid Green Slider Styles ===== */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-color);
+  border: 2px solid var(--primary-dark);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--primary-color);
+  border: 2px solid var(--primary-dark);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+body.dark-mode .slider-labels {
+  color: var(--text-dark);
+}
+
+/* ===== Checkbox Styles ===== */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* ===== Results Section ===== */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 20px 0;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.subtitle {
+  color: var(--primary-color);
+  font-family: 'Rancho', cursive;
+  font-size: 32px;
+  margin: 0;
+}
+
+.results-count {
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.page-info {
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+body.dark-mode .page-info {
+  color: var(--text-dark);
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+/* ===== Book Card Styles ===== */
+.book-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  background: var(--card-bg-light);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  box-shadow: 0 4px 15px var(--shadow-light);
+  transition: var(--transition);
+  max-width: none;
+}
+
+body.dark-mode .book-row {
+  background: var(--card-bg-dark);
+  box-shadow: 0 4px 15px var(--shadow-dark);
+}
+
+.book-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-light);
+}
+
+body.dark-mode .book-row:hover {
+  box-shadow: 0 6px 20px var(--shadow-dark);
+}
+
+.book-cover {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.book-cover img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  border: 3px solid var(--primary-color);
+  transition: var(--transition);
+}
+
+.book-details {
+  flex: 1;
+  text-align: left;
+}
+
+.book-title {
+  font-size: 28px;
+  font-family: 'Rancho', cursive;
+  margin: 0 0 8px 0;
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.book-author {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 12px;
+  color: var(--text-light);
+}
+
+body.dark-mode .book-author {
+  color: var(--text-dark);
+}
+
+.book-details p {
+  margin: 6px 0;
+  font-size: 16px;
+  font-family: 'Handlee', cursive;
+}
+
+.book-description {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+body.dark-mode .book-description {
+  color: var(--text-dark);
+}
+
+.award-icon {
+  font-size: 24px;
+  color: var(--accent-color);
+  margin-left: 12px;
+}
+
+/* ===== Pagination Styles ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.pagination-button {
+  padding: 12px 20px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Handlee', cursive;
+  font-size: 16px;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.pagination-button:disabled {
+  background: var(--border-light);
+  cursor: not-allowed;
+}
+
+body.dark-mode .pagination-button:disabled {
+  background: var(--border-dark);
+}
+
+.pagination-info {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* ===== No Results Styles ===== */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+
+body.dark-mode .no-results {
+  color: var(--text-dark);
+}
+
+.no-results h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+/* ===== Model Title Styles ===== */
+.title {
+  font-size: 42px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: 'Rancho', cursive;
+  color: var(--primary-color);
+}
+
+/* ===== Filters Grid for Deep Dive ===== */
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1024px) {
+  .home-container {
+    gap: 15px;
+    padding: 5px 15px 15px 15px; /* FIXED: Reduced top padding on tablet */
+  }
+  
+  .main-logo {
+    max-width: 450px; /* FIXED: Still large on tablet */
+    margin-top: -5px;
+  }
+
+  .tagline {
+    font-size: 22px;
+  }
+
+  .instructions h2 {
+    font-size: 20px;
+  }
+
+  .instructions li {
+    font-size: 15px;
+  }
+
+  .stats-section {
+    max-width: 280px; /* FIXED: Narrower on tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .topbar {
+    padding: 6px 15px;
+    height: 50px;
+  }
+
+  .menu-panel {
+    top: 50px;
+    height: calc(100vh - 50px);
+    width: 100%;
+  }
+
+  body.menu-open .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .main-content {
+    padding: 0px 15px 15px 15px; /* FIXED: Reduced top padding on mobile */
+    margin-top: 50px;
+    min-height: calc(100vh - 50px);
+  }
+
+  .home-container {
+    padding: 0px 10px 10px 10px; /* FIXED: Minimal top padding on mobile */
+    gap: 12px;
+  }
+
+  .main-logo {
+    max-width: 380px; /* FIXED: Still prominent on mobile */
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .tagline {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .instructions h2 {
+    font-size: 18px;
+  }
+
+  .instructions li {
+    font-size: 14px;
+    padding-left: 35px;
+  }
+
+  .instructions li::before {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+
+  .stats-section {
+    padding: 6px 8px;
+    height: 50px; /* FIXED: Smaller on mobile */
+    max-width: 250px;
+  }
+
+  .stat-number {
+    font-size: 12px;
+  }
+
+  .stat-label {
+    font-size: 8px;
+  }
+
+  .book-row {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .book-cover img {
+    width: 120px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .menu-links a {
+    font-size: 20px;
+    padding: 10px 14px;
+  }
+
+  .creator img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .menu-button,
+  .theme-button {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .quick-pick-container,
+  .smart-match-container,
+  .deep-dive-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-logo {
+    max-width: 320px; /* FIXED: Still prominent on small mobile */
+  }
+
+  .tagline {
+    font-size: 18px;
+  }
+
+  .instructions {
+    padding: 0 10px;
+  }
+
+  .instructions h2 {
+    font-size: 16px;
+  }
+
+  .instructions li {
+    font-size: 13px;
+    padding-left: 32px;
+  }
+
+  .instructions li::before {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form select,
+  form textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  form button {
+    font-size: 18px;
+    padding: 14px 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .stats-section {
+    max-width: 220px;
+    height: 45px;
+  }
+
+  .stat-number {
+    font-size: 11px;
+  }
+
+  .stat-label {
+    font-size: 7px;
+  }
+}

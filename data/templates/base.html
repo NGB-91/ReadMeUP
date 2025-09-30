@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReadMeUp</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rancho&family=Handlee&display=swap">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body class="light-mode">
+  <header>
+    <nav class="navbar">
+      <div class="logo-text">ReadMeUp</div>
+      <div class="menu">
+        <div class="dropdown">
+          <button class="dropbtn">Home ▾</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('main.quick_pick') }}">Quick Pick</a>
+            <a href="{{ url_for('main.smart_match') }}">Smart Match</a>
+            <a href="{{ url_for('main.deep_dive') }}">Deep Dive</a>
+            <div class="divider"></div>
+            <div class="creators">
+              <div class="creator">
+                <img src="{{ url_for('static', filename='images/elena.png') }}" alt="Elena">
+                <span class="tooltip">Elena</span>
+              </div>
+              <div class="creator">
+                <img src="{{ url_for('static', filename='images/noemi.png') }}" alt="Noemí">
+                <span class="tooltip">Noemí</span>
+              </div>
+              <div class="creator">
+                <img src="{{ url_for('static', filename='images/sami.png') }}" alt="Sami">
+                <span class="tooltip">Sami</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="theme-toggle">🌙 / ☀️</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

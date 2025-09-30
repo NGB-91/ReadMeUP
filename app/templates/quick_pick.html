@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="quick-pick-container">
+  <div class="model-form-container">
+    <h1 class="title">Quick Pick</h1>
+
+    <form method="POST" id="quick-pick-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="title_kw">Title</label>
+          <input type="text" 
+                 name="title_kw" 
+                 id="title_kw"
+                 placeholder="Search by title..."
+                 value="{{ filters.title_kw }}">
+        </div>
+
+        <div class="form-group">
+          <label for="author_kw">Author</label>
+          <input type="text" 
+                 name="author_kw" 
+                 id="author_kw"
+                 placeholder="Search by author..."
+                 value="{{ filters.author_kw }}">
+        </div>
+
+        <div class="form-group">
+          <label for="genre_kw">Genres</label>
+          <select name="genre_kw" id="genre_kw">
+            <option value="">Select genres...</option>
+            {% for genre in genres %}
+              <option value="{{ genre }}" 
+                      {% if genre in filters.genre_kw %}selected{% endif %}>
+                {{ genre }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="lang_kw">Language</label>
+          <select name="lang_kw" id="lang_kw">
+            <option value="">Any Language</option>
+            {% for lang in languages %}
+              <option value="{{ lang }}" 
+                      {% if lang == filters.lang_kw %}selected{% endif %}>
+                {{ lang }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="order_by">Sort By</label>
+          <select name="order_by" id="order_by">
+            <option value="rating (high to low)" 
+                    {% if filters.order_by == "rating (high to low)" %}selected{% endif %}>
+              Rating (High to Low)
+            </option>
+            <option value="title (A-Z)" 
+                    {% if filters.order_by == "title (A-Z)" %}selected{% endif %}>
+              Title (A-Z)
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="page_size">Results Per Page</label>
+          <select name="page_size" id="page-size">
+            <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+            <option value="20" {% if page_size == 20 %}selected{% endif %}>20</option>
+            <option value="30" {% if page_size == 30 %}selected{% endif %}>30</option>
+            <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-button">Search Books</button>
+    </form>
+
+    {% if request.method == 'POST' %}
+    <div class="results-header">
+      <h2 class="subtitle">Search Results</h2>
+      {% if total > 0 %}
+        <div class="results-count">{{ total }} books found</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="results-list">
+      {% for book in results %}
+        <div class="book-row">
+          <div class="book-cover">
+            <img src="{{ book.coverImg }}" alt="Cover of {{ book.title }}">
+            {% if book.Award == True or book.Award == "True" %}
+              <span class="award-icon">🏆</span>
+            {% endif %}
+          </div>
+          <div class="book-details">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author"><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Rating:</strong> {{ book.rating }}</p>
+            <p><strong>Genres:</strong> {{ book.genres }}</p>
+            <p><strong>Language:</strong> {{ book.language }}</p>
+            <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+            <p class="book-description">{{ book.description }}</p>
+          </div>
+        </div>
+      {% else %}
+        {% if request.method == 'POST' %}
+          <div class="no-results">
+            <h3>No books found</h3>
+            <p>Try adjusting your search criteria or using different keywords.</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if n_pages > 1 %}
+    <div class="pagination">
+      {% if page > 1 %}
+        <button type="button" onclick="goToPage({{ page - 1 }})" class="pagination-button">
+          Previous
+        </button>
+      {% endif %}
+
+      <span class="pagination-info">Page {{ page }} of {{ n_pages }}</span>
+
+      {% if page < n_pages %}
+        <button type="button" onclick="goToPage({{ page + 1 }})" class="pagination-button">
+          Next
+        </button>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function goToPage(newPage) {
+  const form = document.getElementById('quick-pick-form');
+  const pageInput = document.createElement('input');
+  pageInput.type = 'hidden';
+  pageInput.name = 'page';
+  pageInput.value = newPage;
+  form.appendChild(pageInput);
+  form.submit();
+}
+</script>
+{% endblock %}

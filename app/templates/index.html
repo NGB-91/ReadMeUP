@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-container">
+  <div class="home-center-content">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+         alt="ReadMeUp Logo" 
+         class="main-logo">
+
+    <p class="tagline">May you find your next favourite story</p>
+
+    <!-- Instructions Section -->
+    <div class="instructions">
+      <h2>How it works</h2>
+      <ol>
+        <li>Tap the menu in the top left corner</li>
+        <li>Choose how you would like to search for your next book</li>
+        <li>Click the search button and you are all set!</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Stats Section - Much smaller and narrower -->
+  <div class="home-stats-section">
+    <div class="stats-section">
+      <div class="stat">
+        <div class="stat-number">25,000+</div>
+        <div class="stat-label">Books Available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">1,500+</div>
+        <div class="stat-label">Award Winners</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Languages</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

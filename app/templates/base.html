@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReadMeUp - Book Recommendation System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI-powered book recommendation system with multiple search methods">
+  
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Rancho&display=swap" rel="stylesheet">
+</head>
+<body class="{% if request.endpoint in ['main.quick_pick','main.smart_match','main.deep_dive'] %}menu-open{% endif %}">
+
+  <!-- Topbar with menu and theme toggle -->
+  <div class="topbar">
+    <button class="menu-button" id="menu-toggle">☰</button>
+    <button class="theme-button" id="theme-toggle">🌓</button>
+  </div>
+
+  <!-- Sidebar navigation menu -->
+  <aside class="menu-panel {% if request.endpoint in ['main.quick_pick','main.smart_match','main.deep_dive'] %}open{% endif %}" id="menu-panel">
+    <div class="menu-header">
+      <a href="{{ url_for('main.index') }}" class="home-link">Home</a>
+    </div>
+    
+    <nav class="menu-links">
+      <a href="{{ url_for('main.quick_pick') }}">Quick Pick</a>
+      <a href="{{ url_for('main.smart_match') }}">Smart Match</a>
+      <a href="{{ url_for('main.deep_dive') }}">Deep Dive</a>
+    </nav>
+
+    <!-- Creators information -->
+    <div class="creators-block">
+      <div class="created-by">Created by</div>
+      <div class="creators">
+        <div class="creator">
+          <img src="{{ url_for('static', filename='images/elena.png') }}" alt="Elena">
+          <div class="tooltip">Elena</div>
+        </div>
+        <div class="creator">
+          <img src="{{ url_for('static', filename='images/noemi.png') }}" alt="Noemí">
+          <div class="tooltip">Noemí</div>
+        </div>
+        <div class="creator">
+          <img src="{{ url_for('static', filename='images/sami.png') }}" alt="Sami">
+          <div class="tooltip">Sami</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content area -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Main JavaScript file -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

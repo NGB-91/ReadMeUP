@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  font-family: 'Handlee', cursive;
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, .logo-text {
+  font-family: 'Rancho', cursive;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #0a7333; /* green primary */
+  color: white;
+}
+
+.navbar .logo-text {
+  font-size: 28px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu button {
+  cursor: pointer;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: 'Handlee', cursive;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #0a7333; /* green primary */
+  color: white;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #0a7333;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.dropdown-content a:hover {
+  background-color: #8f5f32; /* gold primary */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.divider {
+  height: 1px;
+  background-color: #fff;
+  margin: 8px 0;
+}
+
+/* Creators in menu */
+.creators {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.creator {
+  position: relative;
+}
+
+.creator img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+}
+
+.creator:hover .tooltip {
+  visibility: visible;
+}
+
+/* Home */
+.home-container {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.main-logo {
+  width: 350px; /* bigger logo */
+  max-width: 90%;
+  margin-bottom: 20px;
+}
+
+.tagline {
+  font-size: 22px;
+  margin: 15px 0;
+}
+
+.instructions {
+  margin-top: 20px;
+}
+
+.instructions h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.instructions ul {
+  list-style-type: disc;
+  display: inline-block;
+  text-align: left;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: #000;
+  color: #fff;
+}
+
+body.dark-mode .navbar {
+  background-color: #88a76d; /* green secondary */
+}
+
+body.dark-mode .dropbtn,
+body.dark-mode .dropdown-content {
+  background-color: #88a76d;
+}
+
+body.dark-mode .dropdown-content a:hover {
+  background-color: #c1b456; /* gold secondary */
+}

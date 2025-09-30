@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="smart-match-container">
+  <div class="model-form-container">
+    <h1 class="title">Smart Match</h1>
+
+    <form method="POST" id="smart-match-form">
+      <div class="form-group">
+        <label for="book_query">Find a Book You Like</label>
+        <input type="text" 
+               name="book_query" 
+               id="book_query"
+               placeholder="Type a book title to search..."
+               value="{{ book_query }}"
+               autocomplete="off">
+      </div>
+
+      {% if filtered_titles %}
+      <div class="form-group">
+        <label for="selected_book">Select a Book</label>
+        <select name="selected_book" id="selected_book">
+          <option value="">-- Choose a book --</option>
+          {% for title in filtered_titles %}
+            <option value="{{ title }}" 
+                    {% if title == selected_book %}selected{% endif %}>
+              {{ title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      {% endif %}
+
+      <div class="options-grid">
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   name="exclude_series" 
+                   {% if exclude_series %}checked{% endif %}>
+            Exclude same series
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   name="exclude_author" 
+                   {% if exclude_author %}checked{% endif %}>
+            Exclude same author
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="top_knn">
+          Number of Recommendations: <span id="knn_value">{{ top_knn }}</span>
+        </label>
+        <input type="range" 
+               id="top_knn" 
+               name="top_knn" 
+               min="3" 
+               max="15" 
+               value="{{ top_knn }}">
+        <div class="slider-labels">
+          <span>3</span>
+          <span>15</span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-button">Find Similar Books</button>
+    </form>
+
+    {% if message %}
+      <div class="results-header">
+        <h2 class="subtitle">{{ message }}</h2>
+        <!-- REMOVED: Results count for Smart Match -->
+      </div>
+    {% endif %}
+
+    <div class="results-list">
+      {% for book in results %}
+        <div class="book-row">
+          <div class="book-cover">
+            <img src="{{ book.coverImg }}" alt="Cover of {{ book.title }}">
+            {% if book.Award == True or book.Award == "True" %}
+              <span class="award-icon">🏆</span>
+            {% endif %}
+          </div>
+          <div class="book-details">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author"><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Rating:</strong> {{ book.rating }}</p>
+            <p><strong>Genres:</strong> {{ book.genres }}</p>
+            <p><strong>Language:</strong> {{ book.language }}</p>
+            <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+            <p class="book-description">{{ book.description }}</p>
+          </div>
+        </div>
+      {% else %}
+        {% if selected_book and request.method == 'POST' %}
+          <div class="no-results">
+            <h3>No similar books found</h3>
+            <p>Try adjusting your filters or select a different book.</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const knnSlider = document.getElementById('top_knn');
+  const knnValue = document.getElementById('knn_value');
+  
+  if (knnSlider && knnValue) {
+    knnSlider.addEventListener('input', function() {
+      knnValue.textContent = this.value;
+    });
+  }
+});
+</script>
+{% endblock %}
