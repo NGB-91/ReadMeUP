@@ -27,9 +27,6 @@ sentence-transformers==2.7.0
 # Deep Learning
 torch==2.1.2
 
-# Recommendation systems
-scikit-surprise==1.1.4
-
 # Web framework
 flask==3.0.2
 
