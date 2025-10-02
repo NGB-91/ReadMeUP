@@ -9,8 +9,8 @@ from app.utils.sorting import sort_df_by_title_lns, sort_lns_iterable
 # Smart Match imports  
 from app.models.smart_model import load_df_knn, prepare_knn, knn_recommend
 
-# Deep Dive imports - UPDATED
-from app.models.deep_model import load_dataset, semantic_recommend  # Removed old functions
+# Deep Dive imports
+from app.models.deep_model import load_dataset, load_embedder, load_faiss_artifacts, semantic_recommend
 
 # Global data loading
 DATA_PATH = "data/final/books_translated.csv"
@@ -21,8 +21,9 @@ df_smart = load_df_knn(DATA_PATH)
 embedding_matrix = np.load("data/final/embeddings.npy")
 knn_model = prepare_knn(df_smart, embedding_matrix)
 
-# Only load dataset, models will load lazily
 df_deep = load_dataset()
+embedder = load_embedder()
+faiss_index, embeddings = load_faiss_artifacts()
 
 @main.route("/")
 def index():
@@ -145,9 +146,8 @@ def deep_dive():
     message = ""
     
     if request.method == "POST" and query:
-        # UPDATED: No need to pass embedder and faiss_index
         results_df, message = semantic_recommend(
-            query, df_deep, top_n, language, min_rating
+            query, df_deep, embedder, faiss_index, top_n, language, min_rating
         )
         if results_df is not None:
             results = results_df.to_dict(orient="records")
